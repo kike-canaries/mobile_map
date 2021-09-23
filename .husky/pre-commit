@@ -20,7 +20,14 @@ npm run check-lint ||
 # Check tsconfig standards
 npm run check-types ||
 (
-    echo '🤡Make the changes required above.'
+    echo 'Make the changes required above.'
+    false;
+)
+
+# Testing
+npm run check-test ||
+(
+    echo 'Make sure test are ok and coverage is between the threshold'
     false;
 )
 

@@ -6,9 +6,9 @@ import Head from "next/head";
  * @return {JSX.Element} The JSX Code for the Home Page
  */
 
-export default function Home() {
+export default function Home(): JSX.Element {
   return (
-    <div className="container">
+    <div className="container" data-testid="component-app">
       <Head>
         <title>Mobile Map</title>
         <link rel="icon" href="/favicon.ico" />
