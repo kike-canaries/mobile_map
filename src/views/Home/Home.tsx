@@ -1,5 +1,19 @@
-import React from "react";
-import Head from "next/head";
+import React, { useEffect, useState } from "react";
+import dynamic from 'next/dynamic'
+import { DatabaseReference, DataSnapshot, ref, onValue } from "firebase/database";
+import { database } from "../../../firebase/clientApp";
+import { TrackInfo } from "../../types/TrackInfo";
+import { Button, Container, Grid, Stack, Typography } from "@mui/material";
+import { TrackData } from "../../types/TracksData";
+import { LatLngExpression } from "leaflet";
+import { SensorData } from "../../types/SensorData";
+
+const Map = dynamic(
+  () => import('../../components/Map'),
+  {
+    ssr: false
+  }
+)
 
 /**
  * Home: The Landing page of the web app
@@ -7,18 +21,71 @@ import Head from "next/head";
  */
 
 export default function Home(): JSX.Element {
+  const [trackInfoList, setTrackInfoList] = useState<TrackInfo[]>([]);
+  const [trackPositions, setTrackPositions] = useState<LatLngExpression[]>([])
+  const [mapCenter, setMapCenter] = useState<LatLngExpression>({lat: 0, lng: 0})
+
+  useEffect(() => {
+    const starCountRef: DatabaseReference = ref(database, 'tracks_info/');
+    onValue(starCountRef, (snapshot: DataSnapshot) => {
+      const newTrackInfoList: TrackInfo[] = []
+      snapshot.forEach((child: DataSnapshot) => {
+        newTrackInfoList.push(child.val())
+      });
+
+      setTrackInfoList(newTrackInfoList);
+    })
+  }, []);
+
+  const getTrackData = (id: string) => {
+    const starCountRef: DatabaseReference = ref(database, 'tracks_data/' + id);
+    onValue(starCountRef, (snapshot: DataSnapshot) => {
+      const trackData = snapshot.val() as TrackData
+      
+      const positions = trackData.data.map((data: SensorData): LatLngExpression => {
+        const latLng: LatLngExpression = {
+          lat: data.lat,
+          lng: data.lon,
+          alt: data.alt
+        }
+        return latLng;
+      });
+      console.warn(positions);
+      setTrackPositions(positions);
+      setMapCenter(positions[0])
+    })
+  };
+
   return (
-    <div className="container" data-testid="component-app">
-      <Head>
-        <title>Mobile Map</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+    <Container maxWidth="xl">
+      <Typography variant="h4" component="h1" gutterBottom>
+        Welcome to Mobile Map
+      </Typography>
+      <Grid container spacing={2}>
+        <Grid item xs={2}>
+          <Stack>
+            {
+              trackInfoList.map((trackInfo: TrackInfo, index: number) =>
+                <Button
+                  key={index}
+                  variant="text"
+                  onClick={() => {
+                    getTrackData(trackInfo.name);
+                  }}>
+                  {trackInfo.name}
+                </Button>
+              )
+            }
+          </Stack>
+        </Grid>
+        <Grid item xs={10}>
+          <Map 
+            positions={trackPositions}
+            center={mapCenter}
+          />
+        </Grid>
+      </Grid>
 
-      <main>
-        <h1 className="title">Welcome to Mobile Map</h1>
-
-        <p className="description">Under Construction</p>
-      </main>
-    </div>
+    </Container>
   );
 }
