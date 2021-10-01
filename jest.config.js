@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 module.exports = {
   collectCoverage: true,
   coverageDirectory: "coverage",
@@ -10,6 +11,11 @@ module.exports = {
     "<rootDir>/lib/",
     "<rootDir>/.next/",
     "<rootDir>/coverage/",
+    "<rootDir>/src/pages/_app.tsx",
+    "<rootDir>/src/pages/_document.tsx",
+    "<rootDir>/src/theme",
+    "<rootDir>/src/types",
+    "<rootDir>/src/services/firebase/FirebaseService.ts",
     ".eslintrc.js",
     "jest.config.js",
   ],

@@ -1,3 +1,4 @@
+// eslint-disable-next-line no-undef
 module.exports = {
   env: {
     browser: true,
@@ -8,9 +9,10 @@ module.exports = {
     "plugin:@typescript-eslint/recommended",
     "airbnb-typescript/base",
     "eslint:recommended",
+    "plugin:@typescript-eslint/recommended",
     "plugin:@typescript-eslint/eslint-recommended",
     "plugin:@typescript-eslint/recommended-requiring-type-checking",
-    "prettier"
+    "prettier",
   ],
   parser: "@typescript-eslint/parser",
   parserOptions: {
@@ -24,7 +26,7 @@ module.exports = {
   plugins: ["react", "@typescript-eslint", "import"],
   rules: {
     "require-jsdoc": 0,
-    "import/extensions": ["error", "never"]
+    "import/extensions": ["error", "never"],
   },
   settings: {
     react: {

@@ -6,6 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
+    "lint": "eslint '*/**/*.{js,ts,tsx}' --quiet --fix",
     "check-types": "tsc --pretty --noEmit",
     "check-format": "prettier --check .",
     "check-lint": "eslint . --ext ts --ext tsx --ext js",
@@ -31,11 +32,12 @@
   "devDependencies": {
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^12.1.0",
+    "@types/jest": "^27.0.2",
     "@types/leaflet": "^1.7.5",
     "@types/react": "^17.0.21",
     "@types/styled-components": "^5.1.14",
-    "@typescript-eslint/eslint-plugin": "^4.31.1",
-    "@typescript-eslint/parser": "^4.31.1",
+    "@typescript-eslint/eslint-plugin": "^4.32.0",
+    "@typescript-eslint/parser": "^4.32.0",
     "babel-jest": "^27.2.0",
     "eslint": "^7.32.0",
     "eslint-config-airbnb": "^18.2.1",
@@ -48,6 +50,7 @@
     "jest": "^27.2.0",
     "prettier": "2.4.1",
     "react-test-renderer": "^17.0.2",
+    "ts-jest": "^27.0.5",
     "typescript": "^4.4.3"
   }
 }

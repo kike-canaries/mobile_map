@@ -21,6 +21,14 @@
     "strict": true,
     "target": "es2018"
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "__mocks__/*",
+    ".eslintrc.js",
+    "jest.config.js",
+    "jest.setup.js"
+  ],
   "exclude": ["node_modules"]
 }
