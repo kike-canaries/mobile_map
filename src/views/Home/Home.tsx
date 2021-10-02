@@ -20,6 +20,10 @@ firebaseService.initFirebaseApp();
 export default function Home(): JSX.Element {
   const [trackInfoList, setTrackInfoList] = useState<TrackInfo[]>([]);
   const [trackPositions, setTrackPositions] = useState<LatLngExpression[]>([]);
+  const [center, setCenter] = useState<LatLngExpression>({
+    lat: -0.179265,
+    lng: -78.474009,
+  });
 
   const getTrackInfo: () => Promise<void> = async () => {
     const trackInfo = await firebaseService.getTrackInfoList();
@@ -35,6 +39,7 @@ export default function Home(): JSX.Element {
     const positions: LatLngExpression[] =
       await firebaseService.getTrackPositions(id);
 
+    setCenter(positions[0]);
     setTrackPositions(positions);
   };
 
@@ -61,7 +66,12 @@ export default function Home(): JSX.Element {
           </Stack>
         </Grid>
         <Grid item xs={10}>
-          <Map data-testid="component-map" positions={trackPositions} />
+          <Map
+            data-testid="component-map"
+            positions={trackPositions}
+            center={center}
+            zoom={13}
+          />
         </Grid>
       </Grid>
     </Container>
