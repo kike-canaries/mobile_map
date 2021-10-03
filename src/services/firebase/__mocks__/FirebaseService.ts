@@ -1,16 +1,14 @@
-import { trackPositions } from "../../../mocks/trackDataMocks";
+import { trackData } from "../../../mocks/trackDataMocks";
 import { trackInfoList } from "../../../mocks/trackInfoMocks";
 
 export const mockGetTrackInfoList = jest.fn().mockResolvedValue(trackInfoList);
-export const mockGetTrackPositions = jest
-  .fn()
-  .mockResolvedValue(trackPositions);
+export const mockGetTrackData = jest.fn().mockResolvedValue(trackData);
 
 const mock = jest.fn().mockImplementation(() => {
   return {
     initFirebaseApp: jest.fn(),
     getTrackInfoList: mockGetTrackInfoList,
-    getTrackPositions: mockGetTrackPositions,
+    getTrackData: mockGetTrackData,
   };
 });
 

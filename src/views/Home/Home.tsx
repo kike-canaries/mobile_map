@@ -4,6 +4,7 @@ import FirebaseService from "../../services/firebase/FirebaseService";
 import { TrackInfo } from "../../types/TrackInfo";
 import { Button, Container, Grid, Stack, Typography } from "@mui/material";
 import { LatLngExpression } from "leaflet";
+import { SensorData } from "../../types/SensorData";
 
 const Map = dynamic(() => import("../../components/Map"), {
   ssr: false,
@@ -19,7 +20,7 @@ firebaseService.initFirebaseApp();
 
 export default function Home(): JSX.Element {
   const [trackInfoList, setTrackInfoList] = useState<TrackInfo[]>([]);
-  const [trackPositions, setTrackPositions] = useState<LatLngExpression[]>([]);
+  const [trackPositions, setTrackPositions] = useState<SensorData[]>([]);
   const [center, setCenter] = useState<LatLngExpression>({
     lat: -0.179265,
     lng: -78.474009,
@@ -36,10 +37,9 @@ export default function Home(): JSX.Element {
   }, []);
 
   const getTrackPositions = async (id: string) => {
-    const positions: LatLngExpression[] =
-      await firebaseService.getTrackPositions(id);
+    const positions: SensorData[] = await firebaseService.getTrackData(id);
 
-    setCenter(positions[0]);
+    // setCenter();
     setTrackPositions(positions);
   };
 

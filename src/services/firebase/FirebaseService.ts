@@ -7,7 +7,7 @@ import {
   ref,
   get,
 } from "firebase/database";
-import { LatLngExpression } from "leaflet";
+import { LatLng } from "leaflet";
 import { SensorData } from "../../types/SensorData";
 import { TrackInfo } from "../../types/TrackInfo";
 import { TrackData } from "../../types/TracksData";
@@ -54,23 +54,18 @@ export default class FirebaseService {
     return trackInfoList;
   }
 
-  async getTrackPositions(id: string): Promise<LatLngExpression[]> {
+  async getTrackData(id: string): Promise<SensorData[]> {
     const db = this.getFirebaseDB();
     const trackDataRef: DatabaseReference = ref(db, "tracks_data/" + id);
     const snapshot: DataSnapshot = await get(trackDataRef);
     const trackData = snapshot.val() as TrackData;
 
-    const positions = trackData.data.map(
-      (data: SensorData): LatLngExpression => {
-        const latLng: LatLngExpression = {
-          lat: data.lat,
-          lng: data.lon,
-          alt: data.alt,
-        };
-        return latLng;
-      }
-    );
+    // const positions = trackData.data.map((data: SensorData): LatLng => {
+    //   const latLng: LatLng = new LatLng(data.lat, data.lon);
 
-    return positions;
+    //   return latLng;
+    // });
+
+    return trackData.data;
   }
 }
