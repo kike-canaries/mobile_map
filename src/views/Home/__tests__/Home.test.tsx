@@ -7,7 +7,18 @@ import * as MockFirebaseService from "../../../services/firebase/__mocks__/Fireb
 jest.mock("../../../services/firebase/FirebaseService");
 jest.mock("leaflet");
 
-const { mockGetTrackPositions } = FirebaseService as typeof MockFirebaseService;
+jest.mock("../../../components/Map", () => {
+  return {
+    __esModule: true,
+    A: true,
+    // eslint-disable-next-line react/display-name
+    default: () => {
+      return <div></div>;
+    },
+  };
+});
+
+const { mockGetTrackData } = FirebaseService as typeof MockFirebaseService;
 
 describe("Home", () => {
   it("Should render without error", async () => {
@@ -32,7 +43,7 @@ describe("Home", () => {
 
     await waitFor(() => {
       fireEvent.click(getByText(buttonLabel));
-      expect(mockGetTrackPositions).toHaveBeenCalled();
+      expect(mockGetTrackData).toHaveBeenCalled();
     });
   });
 });

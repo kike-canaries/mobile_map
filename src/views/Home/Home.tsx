@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
+import styled from "styled-components";
 import FirebaseService from "../../services/firebase/FirebaseService";
 import { TrackInfo } from "../../types/TrackInfo";
 import { Button, Container, Grid, Stack, Typography } from "@mui/material";
@@ -12,6 +13,11 @@ const Map = dynamic(() => import("../../components/Map"), {
 
 const firebaseService = new FirebaseService();
 firebaseService.initFirebaseApp();
+
+const ScrollableStack = styled(Stack)`
+  height: 100vh;
+  overflow: auto;
+`;
 
 /**
  * Home: The Landing page of the web app
@@ -39,7 +45,6 @@ export default function Home(): JSX.Element {
   const getTrackPositions = async (id: string) => {
     const positions: SensorData[] = await firebaseService.getTrackData(id);
 
-    // setCenter();
     setTrackPositions(positions);
   };
 
@@ -50,7 +55,7 @@ export default function Home(): JSX.Element {
       </Typography>
       <Grid container spacing={2}>
         <Grid item xs={2}>
-          <Stack>
+          <ScrollableStack>
             {trackInfoList.map((trackInfo: TrackInfo, index: number) => (
               <Button
                 key={index}
@@ -63,7 +68,7 @@ export default function Home(): JSX.Element {
                 {trackInfo.name}
               </Button>
             ))}
-          </Stack>
+          </ScrollableStack>
         </Grid>
         <Grid item xs={10}>
           <Map

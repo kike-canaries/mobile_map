@@ -7,7 +7,6 @@ import {
   ref,
   get,
 } from "firebase/database";
-import { LatLng } from "leaflet";
 import { SensorData } from "../../types/SensorData";
 import { TrackInfo } from "../../types/TrackInfo";
 import { TrackData } from "../../types/TracksData";
@@ -35,8 +34,6 @@ export default class FirebaseService {
   }
 
   getFirebaseDB(): Database {
-    console.warn(getDatabase);
-
     const db = getDatabase();
     return db;
   }
@@ -59,12 +56,6 @@ export default class FirebaseService {
     const trackDataRef: DatabaseReference = ref(db, "tracks_data/" + id);
     const snapshot: DataSnapshot = await get(trackDataRef);
     const trackData = snapshot.val() as TrackData;
-
-    // const positions = trackData.data.map((data: SensorData): LatLng => {
-    //   const latLng: LatLng = new LatLng(data.lat, data.lon);
-
-    //   return latLng;
-    // });
 
     return trackData.data;
   }
