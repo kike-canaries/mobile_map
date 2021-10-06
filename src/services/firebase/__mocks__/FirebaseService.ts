@@ -2,7 +2,7 @@ import { trackData } from "../../../mocks/trackDataMocks";
 import { trackInfoList } from "../../../mocks/trackInfoMocks";
 
 export const mockGetTrackInfoList = jest.fn().mockResolvedValue(trackInfoList);
-export const mockGetTrackData = jest.fn().mockResolvedValue(trackData.data);
+export const mockGetTrackData = jest.fn().mockResolvedValue(trackData);
 
 const mock = jest.fn().mockImplementation(() => {
   return {

@@ -51,12 +51,12 @@ export default class FirebaseService {
     return trackInfoList;
   }
 
-  async getTrackData(id: string): Promise<SensorData[]> {
+  async getTrackData(id: string): Promise<TrackData> {
     const db = this.getFirebaseDB();
     const trackDataRef: DatabaseReference = ref(db, "tracks_data/" + id);
     const snapshot: DataSnapshot = await get(trackDataRef);
     const trackData = snapshot.val() as TrackData;
 
-    return trackData.data;
+    return trackData;
   }
 }
