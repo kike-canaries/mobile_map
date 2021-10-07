@@ -4,10 +4,13 @@ import { useMap } from "react-leaflet";
 import { SensorData } from "../../types/SensorData";
 import { MapProps } from "../Map/Map";
 
-const ChangeMapView: React.FC<MapProps> = ({ center, zoom, positions }) => {
+export type ChangeMapViewProps = {
+  positions: SensorData[];
+};
+
+const ChangeMapView: React.FC<ChangeMapViewProps> = ({ positions }) => {
   const pathsLayerRef = useRef<LayerGroup>(layerGroup());
   const map = useMap();
-  map.setView(center, zoom);
 
   const getColor = (value: number) => {
     if (value <= 13) return "#187218";

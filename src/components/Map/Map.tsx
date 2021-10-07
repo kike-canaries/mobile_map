@@ -1,4 +1,3 @@
-import { LatLng } from "leaflet";
 import React from "react";
 import { MapContainer, TileLayer } from "react-leaflet";
 import { SensorData } from "../../types/SensorData";
@@ -6,18 +5,18 @@ import ChangeMapView from "../ChangeMapView";
 
 export type MapProps = {
   positions: SensorData[];
-  center: LatLng;
   zoom: number;
 };
 
-const Map: React.FC<MapProps> = ({ positions, center, zoom }) => {
+const Map: React.FC<MapProps> = ({ positions, zoom }) => {
   return (
     <MapContainer
       zoom={13}
+      center={[46.27, 6.06]}
       scrollWheelZoom={false}
       style={{ height: "90vh", width: "100%" }}
     >
-      <ChangeMapView center={center} zoom={zoom} positions={positions} />
+      <ChangeMapView zoom={zoom} positions={positions} />
       <TileLayer
         opacity={0.4}
         attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'

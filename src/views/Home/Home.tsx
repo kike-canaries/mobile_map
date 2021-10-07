@@ -38,10 +38,6 @@ export default function Home(): JSX.Element {
   const [trackInfoList, setTrackInfoList] = useState<TrackInfo[]>([]);
   const [trackPositions, setTrackPositions] = useState<SensorData[]>([]);
   const [trackData, setTrackData] = useState<TrackData | undefined>();
-  const [center, setCenter] = useState<LatLngExpression>({
-    lat: -0.179265,
-    lng: -78.474009,
-  });
 
   const getTrackInfo: () => Promise<void> = async () => {
     const trackInfo = await firebaseService.getTrackInfoList();
@@ -126,7 +122,6 @@ export default function Home(): JSX.Element {
           <Map
             data-testid="component-map"
             positions={trackPositions}
-            center={center}
             zoom={13}
           />
         </Grid>
