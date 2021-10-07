@@ -3,19 +3,10 @@ import dynamic from "next/dynamic";
 import styled from "styled-components";
 import FirebaseService from "../../services/firebase/FirebaseService";
 import { TrackInfo } from "../../types/TrackInfo";
-import {
-  Button,
-  Container,
-  Grid,
-  IconButton,
-  Stack,
-  Typography,
-} from "@mui/material";
-import { LatLngExpression } from "leaflet";
+import { Box, Button, Container, Grid, Stack, Typography } from "@mui/material";
 import { SensorData } from "../../types/SensorData";
 import { Download } from "@mui/icons-material";
 import { TrackData } from "../../types/TracksData";
-import { Box } from "@mui/system";
 
 const Map = dynamic(() => import("../../components/Map"), {
   ssr: false,
@@ -38,10 +29,6 @@ export default function Home(): JSX.Element {
   const [trackInfoList, setTrackInfoList] = useState<TrackInfo[]>([]);
   const [trackPositions, setTrackPositions] = useState<SensorData[]>([]);
   const [trackData, setTrackData] = useState<TrackData | undefined>();
-  const [center, setCenter] = useState<LatLngExpression>({
-    lat: -0.179265,
-    lng: -78.474009,
-  });
 
   const getTrackInfo: () => Promise<void> = async () => {
     const trackInfo = await firebaseService.getTrackInfoList();
@@ -126,7 +113,6 @@ export default function Home(): JSX.Element {
           <Map
             data-testid="component-map"
             positions={trackPositions}
-            center={center}
             zoom={13}
           />
         </Grid>

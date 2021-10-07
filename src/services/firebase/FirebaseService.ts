@@ -7,7 +7,6 @@ import {
   ref,
   get,
 } from "firebase/database";
-import { SensorData } from "../../types/SensorData";
 import { TrackInfo } from "../../types/TrackInfo";
 import { TrackData } from "../../types/TracksData";
 // import * as db from '@firebase/database';
