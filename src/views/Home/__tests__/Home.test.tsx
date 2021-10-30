@@ -21,7 +21,7 @@ jest.mock("../../../components/Map", () => {
 const { mockGetTrackData } = FirebaseService as typeof MockFirebaseService;
 
 describe("Home", () => {
-  it("Should render without error", async () => {
+  it("should render without error", async () => {
     const { getByTestId } = render(<Home />);
     const component = getByTestId("component-app");
     await waitFor(() => expect(component).toBeInTheDocument());

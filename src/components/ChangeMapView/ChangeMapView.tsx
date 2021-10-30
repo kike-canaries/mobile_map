@@ -2,6 +2,7 @@ import { LatLng, polyline, layerGroup, LayerGroup } from "leaflet";
 import React, { useEffect, useRef } from "react";
 import { useMap } from "react-leaflet";
 import { SensorData } from "../../types/SensorData";
+import { getColor } from "./changeMapViewUtils";
 
 export type ChangeMapViewProps = {
   positions: SensorData[];
@@ -10,15 +11,6 @@ export type ChangeMapViewProps = {
 const ChangeMapView: React.FC<ChangeMapViewProps> = ({ positions }) => {
   const pathsLayerRef = useRef<LayerGroup>(layerGroup());
   const map = useMap();
-
-  const getColor = (value: number) => {
-    if (value <= 13) return "#187218";
-    else if (value <= 35) return "#E8E372";
-    else if (value <= 55) return "#ffa500";
-    else if (value <= 150) return "#f00";
-    else if (value <= 250) return "#950ad7";
-    else return "#584949";
-  };
 
   useEffect(() => {
     const polylines: LatLng[] = [];
