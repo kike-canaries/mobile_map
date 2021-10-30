@@ -4,8 +4,11 @@ import Home from "../../../pages/index";
 import { trackInfoList } from "../../../mocks/trackInfoMocks";
 import * as FirebaseService from "../../../services/firebase/FirebaseService";
 import * as MockFirebaseService from "../../../services/firebase/__mocks__/FirebaseService";
+import * as HomeUtils from "../homeUtils";
 jest.mock("../../../services/firebase/FirebaseService");
 jest.mock("leaflet");
+
+jest.mock("../homeUtils");
 
 jest.mock("../../../components/Map", () => {
   return {
@@ -21,6 +24,10 @@ jest.mock("../../../components/Map", () => {
 const { mockGetTrackData } = FirebaseService as typeof MockFirebaseService;
 
 describe("Home", () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
   it("should render without error", async () => {
     const { getByTestId } = render(<Home />);
     const component = getByTestId("component-app");
@@ -44,6 +51,20 @@ describe("Home", () => {
     await waitFor(() => {
       fireEvent.click(getByText(buttonLabel));
       expect(mockGetTrackData).toHaveBeenCalled();
+    });
+  });
+
+  it("should creat element to download track data", async () => {
+    const buttonLabel = trackInfoList[0].name;
+    const { getByText } = render(<Home />);
+
+    await waitFor(() => {
+      fireEvent.click(getByText(buttonLabel));
+    });
+    await waitFor(() => {
+      fireEvent.click(getByText("Download"));
+
+      expect(HomeUtils.downloadTrackData).toHaveBeenCalledTimes(1);
     });
   });
 });

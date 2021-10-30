@@ -7,6 +7,7 @@ import { Box, Button, Container, Grid, Stack, Typography } from "@mui/material";
 import { SensorData } from "../../types/SensorData";
 import { Download } from "@mui/icons-material";
 import { TrackData } from "../../types/TracksData";
+import { downloadTrackData } from "./homeUtils";
 
 const Map = dynamic(() => import("../../components/Map"), {
   ssr: false,
@@ -47,21 +48,6 @@ export default function Home(): JSX.Element {
     setTrackPositions(newTrackData.data);
   };
 
-  const downloadTrackData = () => {
-    if (trackData) {
-      const fileName = trackData.name;
-      const json = JSON.stringify(trackData);
-      const blob = new Blob([json], { type: "application/json" });
-      const href = URL.createObjectURL(blob);
-      const link = document.createElement("a");
-      link.href = href;
-      link.download = fileName + ".json";
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-    }
-  };
-
   return (
     <Container maxWidth="xl" data-testid="component-app">
       <Grid container spacing={2}>
@@ -85,7 +71,7 @@ export default function Home(): JSX.Element {
                 variant="contained"
                 endIcon={<Download />}
                 onClick={() => {
-                  void downloadTrackData();
+                  void downloadTrackData(trackData);
                 }}
               >
                 Download
