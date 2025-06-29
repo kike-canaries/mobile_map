@@ -3,11 +3,12 @@ import dynamic from "next/dynamic";
 import styled from "styled-components";
 import FirebaseService from "../../services/firebase/FirebaseService";
 import { TrackInfo } from "../../types/TrackInfo";
-import { Box, Button, Container, Grid, Stack, Typography } from "@mui/material";
+import { Box } from "@mui/material";
 import { SensorData } from "../../types/SensorData";
-import { Download } from "@mui/icons-material";
 import { TrackData } from "../../types/TracksData";
-import { downloadTrackData } from "./homeUtils";
+import RouteList from "../../components/RouteList";
+import Footer from "../../components/Footer";
+import Header from "../../components/Header";
 
 const Map = dynamic(() => import("../../components/Map"), {
   ssr: false,
@@ -16,9 +17,17 @@ const Map = dynamic(() => import("../../components/Map"), {
 const firebaseService = new FirebaseService();
 firebaseService.initFirebaseApp();
 
-const ScrollableStack = styled(Stack)`
-  height: 90vh;
-  overflow: auto;
+const ContentContainer = styled(Box)`
+  display: flex;
+  flex-direction: row;
+  height: calc(100vh - 128px); /* Subtract header and footer height */
+  margin-top: 64px; /* Header height */
+  margin-bottom: 64px; /* Footer height */
+`;
+
+const MapContainer = styled(Box)`
+  flex-grow: 1;
+  overflow: hidden;
 `;
 
 /**
@@ -49,60 +58,22 @@ export default function Home(): JSX.Element {
   };
 
   return (
-    <Container maxWidth="xl" data-testid="component-app">
-      <Grid container spacing={2}>
-        <Grid item xs={8}>
-          <Typography variant="h4" component="h1" gutterBottom>
-            Welcome to Mobile Map
-          </Typography>
-        </Grid>
-        <Grid item xs={4}>
-          {trackData && (
-            <Box
-              display="flex"
-              flexDirection="row"
-              gap={3}
-              justifyContent="center"
-            >
-              <Typography variant="body1" component="h2" gutterBottom>
-                {trackData.name}
-              </Typography>
-              <Button
-                variant="contained"
-                endIcon={<Download />}
-                onClick={() => {
-                  void downloadTrackData(trackData);
-                }}
-              >
-                Download
-              </Button>
-            </Box>
-          )}
-        </Grid>
-        <Grid item xs={2}>
-          <ScrollableStack>
-            {trackInfoList.map((trackInfo: TrackInfo, index: number) => (
-              <Button
-                key={index}
-                data-testid="button-track-info"
-                variant="text"
-                onClick={() => {
-                  void getTrackPositions(trackInfo.name);
-                }}
-              >
-                {trackInfo.name}
-              </Button>
-            ))}
-          </ScrollableStack>
-        </Grid>
-        <Grid item xs={10}>
+    <>
+      <Header trackData={trackData} />
+      <ContentContainer data-testid="component-app">
+        <RouteList
+          trackInfoList={trackInfoList}
+          onTrackSelect={getTrackPositions}
+        />
+        <MapContainer>
           <Map
             data-testid="component-map"
             positions={trackPositions}
             zoom={13}
           />
-        </Grid>
-      </Grid>
-    </Container>
+        </MapContainer>
+      </ContentContainer>
+      <Footer />
+    </>
   );
 }

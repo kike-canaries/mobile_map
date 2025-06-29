@@ -14,7 +14,7 @@ const Map: React.FC<MapProps> = ({ positions, zoom }) => {
       zoom={zoom}
       center={[46.27, 6.06]}
       scrollWheelZoom={false}
-      style={{ height: "90vh", width: "100%" }}
+      style={{ height: "100%", width: "100%" }}
     >
       <ChangeMapView positions={positions} />
       <TileLayer
