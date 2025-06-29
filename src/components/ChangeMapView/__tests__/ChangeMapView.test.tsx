@@ -22,6 +22,7 @@ jest.mock("leaflet", () => {
     Map: jest.fn().mockImplementation(() => {
       return {
         fitBounds: jest.fn(),
+        remove: jest.fn(),
       };
     }),
     LatLng: jest.fn().mockImplementation(() => {
