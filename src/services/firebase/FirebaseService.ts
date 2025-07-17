@@ -47,7 +47,7 @@ export default class FirebaseService {
       trackInfoList.push(child.val());
     });
 
-    return trackInfoList;
+    return trackInfoList.reverse();
   }
 
   async getTrackData(id: string): Promise<TrackData> {
