@@ -9,6 +9,7 @@ import { TrackData } from "../../types/TracksData";
 import RouteList from "../../components/RouteList";
 import Footer from "../../components/Footer";
 import Header from "../../components/Header";
+import { useRouter } from "next/router";
 
 const Map = dynamic(() => import("../../components/Map"), {
   ssr: false,
@@ -39,6 +40,8 @@ export default function Home(): JSX.Element {
   const [trackInfoList, setTrackInfoList] = useState<TrackInfo[]>([]);
   const [trackPositions, setTrackPositions] = useState<SensorData[]>([]);
   const [trackData, setTrackData] = useState<TrackData | undefined>();
+  const router = useRouter();
+  const { trackId } = router.query;
 
   const getTrackInfo: () => Promise<void> = async () => {
     const trackInfo = await firebaseService.getTrackInfoList();
@@ -50,12 +53,27 @@ export default function Home(): JSX.Element {
     void getTrackInfo();
   }, []);
 
+
+
   const getTrackPositions = async (id: string) => {
     const newTrackData: TrackData = await firebaseService.getTrackData(id);
 
     setTrackData(newTrackData);
     setTrackPositions(newTrackData.data);
+    void router.replace(
+      {
+        pathname: router.pathname, // stay on the same page
+        query: { trackId: id }, // add your params
+      },
+      undefined,
+      { shallow: true }
+    );
   };
+
+  useEffect(() => {
+    if (!trackId) return;
+    void getTrackPositions(trackId as string);
+  }, [trackId]);
 
   return (
     <>

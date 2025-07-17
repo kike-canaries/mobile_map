@@ -29,6 +29,11 @@ const HeaderContent = styled(Box)`
   position: relative;
 `;
 
+const ButtonsContainer = styled(Box)`
+  display: flex;
+  gap: 8px;
+`;
+
 const TrackDataName = styled(Typography)`
   position: absolute;
   left: 50%;
@@ -45,15 +50,34 @@ const Header: React.FC<HeaderProps> = ({ trackData }) => {
           <TrackDataName variant="h6">{trackData.name}</TrackDataName>
         )}
         {trackData && (
-          <Button
-            variant="contained"
-            endIcon={<Download />}
-            onClick={() => {
-              void downloadTrackData(trackData);
-            }}
-          >
-            Download
-          </Button>
+          <ButtonsContainer>
+            <Button
+              variant="contained"
+              endIcon={<Download />}
+              onClick={() => {
+                void downloadTrackData(trackData);
+              }}
+            >
+              Download
+            </Button>
+            <Button
+              variant="contained"
+              onClick={() => {
+                if (navigator.share) {
+                  navigator
+                    .share({
+                      title: "Mobile Map",
+                      url: window.location.href,
+                    })
+                    .catch(console.error);
+                } else {
+                  alert("Sharing is not supported on this browser.");
+                }
+              }}
+            >
+              Share
+            </Button>
+          </ButtonsContainer>
         )}
       </HeaderContent>
     </HeaderContainer>
