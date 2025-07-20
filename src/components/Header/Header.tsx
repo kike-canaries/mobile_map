@@ -10,23 +10,24 @@ type HeaderProps = {
 };
 
 const HeaderContainer = styled(Box)`
-  background-color: #1976d2;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 5rem;
+  padding: 0 1rem;
   color: white;
-  text-align: center;
-  padding: 16px;
-  position: fixed;
-  top: 0;
+  background-color: #1976d2;
   width: 100%;
-  z-index: 1000;
+
+  @media (min-width: 769px) {
+  }
 `;
 
 const HeaderContent = styled(Box)`
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  max-width: 1200px;
-  margin: 0 auto;
-  position: relative;
+  background-color:rgb(134, 205, 42);
+  @media (min-width: 769px) {
+  }
 `;
 
 const ButtonsContainer = styled(Box)`
@@ -35,10 +36,21 @@ const ButtonsContainer = styled(Box)`
 `;
 
 const TrackDataName = styled(Typography)`
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  white-space: nowrap;
+  @media (max-width: 768px) {
+    position: absolute;
+    top: 5rem;
+    right: 1rem;
+    z-index: 1000;
+    color: #1976d2;
+  } 
+`;
+
+const Title = styled(Typography)`
+  font-size: 1.5rem;
+
+  @media (min-width: 769px) {
+    font-size: 2rem;
+  }
 `;
 
 const Header: React.FC<HeaderProps> = ({ trackData }) => {
@@ -65,31 +77,29 @@ const Header: React.FC<HeaderProps> = ({ trackData }) => {
 
   return (
     <HeaderContainer>
-      <HeaderContent>
-        <Typography variant="h4">Welcome to Mobile Map</Typography>
-        {trackData && (
-          <TrackDataName variant="h6">{trackData.name}</TrackDataName>
-        )}
-        {trackData && (
-          <ButtonsContainer>
-            <Button
-              variant="contained"
-              endIcon={<Download />}
-              onClick={() => {
-                void downloadTrackData(trackData);
-              }}
-            >
-              Download
-            </Button>
-            <Button
-              variant="contained"
-              onClick={handleShare}
-            >
-              Share
-            </Button>
-          </ButtonsContainer>
-        )}
-      </HeaderContent>
+      <Title variant="h4">Mobile Map</Title>
+      {trackData && (
+        <TrackDataName variant="h6">{trackData.name}</TrackDataName>
+      )}
+      {trackData && (
+        <ButtonsContainer>
+          <Button
+            variant="contained"
+            endIcon={<Download />}
+            onClick={() => {
+              void downloadTrackData(trackData);
+            }}
+          >
+            Download
+          </Button>
+          <Button
+            variant="contained"
+            onClick={handleShare}
+          >
+            Share
+          </Button>
+        </ButtonsContainer>
+      )}
     </HeaderContainer>
   );
 };

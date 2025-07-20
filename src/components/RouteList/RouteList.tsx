@@ -5,12 +5,21 @@ import { Menu, Close } from "@mui/icons-material";
 import { TrackInfo } from "../../types/TrackInfo";
 
 const ScrollableStack = styled(Stack)`
+  display: flex;
+  justify-content: center;
+  align-items: center;
   height: 90vh;
+  width: 100%;
   overflow: auto;
   scrollbar-width: none; /* For Firefox */
   -ms-overflow-style: none; /* For Internet Explorer and Edge */
   &::-webkit-scrollbar {
     display: none; /* For Chrome, Safari, and Opera */
+  }
+  @media (max-width: 768px) {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
   }
 `;
 
@@ -28,6 +37,9 @@ const CollapsibleMenu = styled(Box)`
 `;
 
 const ToggleButton = styled(Button)`
+  @media (max-width: 768px) {
+    display none;
+  }
   align-self: ${(props: { isOpen: boolean }) =>
     props.isOpen ? "flex-start" : "center"};
   margin-bottom: 8px;

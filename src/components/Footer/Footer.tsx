@@ -7,9 +7,7 @@ const FooterContainer = styled(Box)`
   background-color: #1976d2;
   color: white;
   text-align: center;
-  padding: 16px;
-  position: fixed;
-  bottom: 0;
+  padding: 1rem;
   width: 100%;
   z-index: 1000;
 `;
