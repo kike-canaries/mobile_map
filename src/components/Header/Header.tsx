@@ -42,6 +42,27 @@ const TrackDataName = styled(Typography)`
 `;
 
 const Header: React.FC<HeaderProps> = ({ trackData }) => {
+  const handleShare = () => {
+    if (navigator.share) {
+      navigator
+        .share({
+          title: "Mobile Map",
+          url: window.location.href,
+        })
+        .catch(console.error);
+    } else {
+      // Fallback: Copy the URL to the clipboard
+      navigator.clipboard
+        .writeText(window.location.href)
+        .then(() => {
+          alert("Link copied to clipboard!");
+        })
+        .catch(() => {
+          alert("Failed to copy the link. Please copy it manually.");
+        });
+    }
+  };
+
   return (
     <HeaderContainer>
       <HeaderContent>
@@ -62,18 +83,7 @@ const Header: React.FC<HeaderProps> = ({ trackData }) => {
             </Button>
             <Button
               variant="contained"
-              onClick={() => {
-                if (navigator.share) {
-                  navigator
-                    .share({
-                      title: "Mobile Map",
-                      url: window.location.href,
-                    })
-                    .catch(console.error);
-                } else {
-                  alert("Sharing is not supported on this browser.");
-                }
-              }}
+              onClick={handleShare}
             >
               Share
             </Button>
