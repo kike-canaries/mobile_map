@@ -11,9 +11,10 @@ There are hooks in place for running linter, tests and build previous to commit 
 # Running locally
 
 1. Run `yarn install`
-2. Run `yarn dev` to run development server
-3. Run `yarn build` to build the app for production
-4. Run `yarn start` runs built app in production mode
+2. Run `source crecredentials.sh`
+3. Run `yarn dev` to run development server
+4. Run `yarn build` to build the app for production
+5. Run `yarn start` runs built app in production mode
 
 # Testing
 
