@@ -24,7 +24,7 @@ const PageContainer = styled(Box)`
   flex-direction: column;
   height: 100vh;
   width: 100%;
-  background-color:rgb(29, 27, 27); /* Light background for mobile */
+  background-color: rgb(29, 27, 27); /* Light background for mobile */
 `;
 
 const ContentContainer = styled(Box)`
@@ -74,7 +74,7 @@ const ToggleButton = styled(Button)`
 const RouteListContainer = styled(Box)`
   @media (max-width: 768px) {
     display: ${({ isVisible }: { isVisible: boolean }) =>
-    isVisible ? "block" : "none"};
+      isVisible ? "block" : "none"};
     position: absolute;
     top: 0;
     left: 0;
