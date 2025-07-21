@@ -25,7 +25,7 @@ const HeaderContainer = styled(Box)`
 
 const HeaderContent = styled(Box)`
   display: flex;
-  background-color:rgb(134, 205, 42);
+  background-color: rgb(134, 205, 42);
   @media (min-width: 769px) {
   }
 `;
@@ -42,7 +42,7 @@ const TrackDataName = styled(Typography)`
     right: 1rem;
     z-index: 1000;
     color: #1976d2;
-  } 
+  }
 `;
 
 const Title = styled(Typography)`
@@ -58,7 +58,7 @@ const Header: React.FC<HeaderProps> = ({ trackData }) => {
     if (navigator.share) {
       navigator
         .share({
-          title: "Mobile Map",
+          title: "CanAirIO Mobile Map Track",
           url: window.location.href,
         })
         .catch(console.error);
@@ -92,10 +92,7 @@ const Header: React.FC<HeaderProps> = ({ trackData }) => {
           >
             Download
           </Button>
-          <Button
-            variant="contained"
-            onClick={handleShare}
-          >
+          <Button variant="contained" onClick={handleShare}>
             Share
           </Button>
         </ButtonsContainer>
